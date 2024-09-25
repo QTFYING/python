@@ -1,0 +1,10 @@
+# .gitignore
+
+# Python virtual environment
+venv/
+
+# Other common ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
