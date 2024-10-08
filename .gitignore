@@ -1,7 +1,7 @@
 # .gitignore
 
 # Python virtual environment
-venv/
+.venv/
 
 # Other common ignores
 __pycache__/
