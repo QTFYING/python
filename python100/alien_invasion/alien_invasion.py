@@ -22,7 +22,6 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
 
         # 设置背景色
-        self.bg_color = (230, 230, 230)
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
 
@@ -31,8 +30,9 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
-            self._update_screen()
+            self._update_bullets()
             self.bullets.update()
+            self._update_screen()
             self.clock.tick(60)
 
     def _check_events(self):
@@ -40,8 +40,6 @@ class AlienInvasion:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            elif event.type == pygame.K_SPACE:
-              self._fire_bullet()
             elif event.type == pygame.KEYDOWN:
               self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
@@ -53,6 +51,8 @@ class AlienInvasion:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
         elif event.key == pygame.K_q:
             sys.exit()
 
@@ -65,16 +65,28 @@ class AlienInvasion:
 
     def _fire_bullet(self):
         """创建一颗子弹，并将其加入到编组bullets中"""
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
+    def _update_bullets(self):
+      self.bullets.update()
+
+      for bullet in self.bullets.copy():
+        if bullet.rect.bottom <= 0:
+          self.bullets.remove(bullet)
 
     def _update_screen(self):
         """更新屏幕上的图像，并切换到新屏幕"""
-        self.screen.fill(self.bg_color)
-        for bullet in self.bullets.sprites():
-            bullet.draw_bullet()
-        self.ship.blitme()
+        # 每次循环时都重新绘制屏幕
+        self.screen.fill(self.settings.bg_color)
 
+        # 在飞船和外星人后面重新绘制子弹
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet() # 子弹绘制
+
+        self.ship.blitme()
+        # 让最近绘制的屏幕可见
         pygame.display.flip()
 
 if __name__ == '__main__':
