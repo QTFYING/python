@@ -1,5 +1,5 @@
 import openpyxl
-import pandas as pd
+import json
 
 def load_workbook(file_path):
     return openpyxl.load_workbook(file_path, data_only=False)
@@ -9,7 +9,7 @@ def get_hyperlink(cell):
 
 def extract_movie_links(ws):
     movie_links = {}
-    for row in ws.iter_rows(min_row=2, values_only=False):
+    for row in ws.iter_rows(min_row=8, values_only=False):
         movie_cell = row[0]
         baidu_cell = row[1]
         kuake_cell = row[2]
@@ -28,24 +28,36 @@ def extract_movie_links(ws):
         }
     return movie_links
 
-def print_movie_links(movie_links):
-    for movie, links in movie_links.items():
-        print(f"电影名称: {movie}")
-        if links['百度网盘']:
-            print(f"百度网盘: {links['百度网盘']}")
-        if links['夸克网盘']:
-            print(f"夸克网盘: {links['夸克网盘']}")
-        if links['迅雷云盘']:
-            print(f"迅雷云盘: {links['迅雷云盘']}")
-        print("-" * 40)
+
+# 生成 json
+def generate_json(data, filename):
+    with open(filename, 'w', encoding='utf-8') as f:
+     json.dump(data, f, ensure_ascii=False, indent=2)
+
+# 生成 html
+def generate_html(movie_links, output_file):
+    with open(output_file, 'w', encoding='utf-8') as f:
+        f.write('<html><head><meta charset="utf-8"><title>电影链接</title></head><body>')
+        f.write('<h1>电影链接</h1>')
+        for movie, links in movie_links.items():
+            f.write(f'<h2>{movie}</h2>')
+            if links['百度网盘']:
+                f.write(f'<p>百度网盘: <a href="{links["百度网盘"]}">{links["百度网盘"]}</a></p>')
+            if links['夸克网盘']:
+                f.write(f'<p>夸克网盘: <a href="{links["夸克网盘"]}">{links["夸克网盘"]}</a></p>')
+            if links['迅雷云盘']:
+                f.write(f'<p>迅雷云盘: <a href="{links["迅雷云盘"]}">{links["迅雷云盘"]}</a></p>')
+            f.write('<hr>')
+        f.write('</body></html>')
 
 def main():
-    file_path = 'movie_list_less.xlsx'
+    file_path = 'movie_list.xlsx'
+    output_file = 'movie_links.html'
     wb = load_workbook(file_path)
     ws = wb.active
-
     movie_links = extract_movie_links(ws)
-    print_movie_links(movie_links)
+    generate_json(movie_links, 'movie_list.json')
+    generate_html(movie_links, output_file)
 
 if __name__ == "__main__":
     main()
