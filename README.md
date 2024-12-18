@@ -6,5 +6,6 @@
 * `mark-in-red-with-scores-bellow-90`  将excel表格中低于90分的标红
 * `unified-file-name-format`  统一将mocks文件夹的文件名调整为xx-xx-xx.xx
 * `download-image`  下载图片
-* `alien_invasion`  雷霆战机
+* `alien-invasion`  雷霆战机
 * `acceptance-letter` 批量生成录取通知书
+* `sort-city` 将cvs数据按照城市进行聚合
