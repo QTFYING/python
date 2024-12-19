@@ -3,6 +3,7 @@
     "blitme",
     "dataframe",
     "FULLSCREEN",
+    "ipynb",
     "iterrows",
     "keydown",
     "keyup",
@@ -10,8 +11,10 @@
     "midbottom",
     "midtop",
     "notna",
+    "pycache",
     "pygame",
     "usecols",
+    "venv",
     "xunlei"
   ]
 }
