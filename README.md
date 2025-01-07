@@ -10,3 +10,4 @@
 * `acceptance-letter` 批量生成录取通知书
 * `sort-city` 将cvs数据按照城市进行聚合
 * `beautiful-soup` 爬虫读取网页数据
+* `sqlite` sqlite数据库操作
