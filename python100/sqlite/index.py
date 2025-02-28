@@ -1,5 +1,4 @@
 import sqlite3
-import random
 from datetime import datetime
 
 # 1.连接数据库（如果数据库文件不存在，则会自动创建一个）
