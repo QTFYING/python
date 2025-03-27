@@ -12,3 +12,4 @@
 * `beautiful-soup` 爬虫读取网页数据
 * `sqlite` sqlite数据库操作
 * `douban-top250-movies` 豆瓣top250
+* `aws-s3` 亚马逊云存储桶操作
